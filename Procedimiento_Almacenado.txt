@@ -1,35 +1,10 @@
 ALTER PROCEDURE [dbo].[Sp_ReportesEnlacesFiltrar]
-@ClienteId INT,
-@TipoServicioId INT,
-@RedTransporte INT,
-@IdBandwidth INT,
-@IdVlan INT,
-@IdEquipoCliente INT,
-@MunicipioId INT
+@ClienteId INT
 
 AS
-
-SELECT e.EnlaceId AS IdSQL,ine.IdNoEnlaces AS "ID Enlace", c.ClienteNombre AS "Nombre del Cliente", e.EnlaceNombre AS "Nombre del Enlace", TS.NombreServicio AS "Servicio", e.Central
-,rt.RedTransporteNombre AS "Transporte", b.BandwidthPerfil AS "Bandwidth", v.VlanNumero AS "VLAN", ec.EquipoClienteNombre AS "CPE", om.OnuModelos AS "ONU Modelo", ons.OnuNoSeries  AS "ONU Serie"
-, e.IpOnuGestion AS "IP ONU Gestion",m.MunicipioNombre AS "Municipio", D.DepartamentoNombre AS "Departamento", e.FechaActivacion AS "F.Activacion", e.Comentarios, e.estado, e.VlanOnuGestion AS "VLAN"
+SELECT c.ClienteNombre AS "Nombre del Cliente"
 
 FROM Enlaces e
 
-INNER JOIN Clientes c ON e.ClienteId=c.ClienteId
-INNER JOIN TiposServicios ts ON e.TipoServicioId=TS.TipoServicioId
-INNER JOIN RedTransporte rt ON e.RedTransporte=rt.IdRedTransporte
-INNER JOIN Bandwidth b ON e.IdBandwidth = b.BandwidthId
-INNER JOIN Vlan v ON e.IdVlan=v.IdVlan
-INNER JOIN EquipoCliente ec ON e.IdEquipoCliente=ec.idEquipoCliente
-INNER JOIN OnuNoSeries ons ON e.idOnuNoSeries=ons.idOnuNoSeries
-
-INNER JOIN OnuModelos om ON ons.IdOnuModelos=om.IdOnuModelos
-
-INNER JOIN Municipios m ON e.MunicipioId=m.MunicipioId
-INNER JOIN Departamentos d ON m.DepartamentoId=D.DepartamentoId
-
-INNER JOIN IdNoEnlaces ine ON e.IdSqlNoEnlaces=ine.IdSqlNoEnlaces
-
 WHERE
-c.ClienteId = @ClienteId AND ts.TipoServicioId = @TipoServicioId AND rt.IdRedTransporte = @RedTransporte
-AND b.BandwidthId=@IdBandwidth AND v.IdVlan=@IdVlan AND ec.idEquipoCliente=@IdEquipoCliente AND m.MunicipioId=@MunicipioId
+c.ClienteId = @ClienteId
