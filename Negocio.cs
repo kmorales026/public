@@ -11,15 +11,10 @@ namespace Sistema.Negocio
 {
     public class NReportes
     {
-        public static DataTable ReportesClientesMostrar()
+        public static DataTable ReportesClientesFiltro(int idCliente)
         {
             DReportes Datos = new DReportes();
-            return Datos.ReportesClientesMostrar();
-        }
-        public static DataTable ReportesEnlacesMostrar()
-        {
-            DReportes Datos = new DReportes();
-            return Datos.ReportesEnlacesMostrar();
+            return Datos.ReportesClientesFiltro(idCliente);
         }
     }
 }
