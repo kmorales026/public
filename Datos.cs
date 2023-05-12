@@ -19,14 +19,15 @@ namespace Sistema.Datos
         private readonly SqlCommand comando = new SqlCommand();
 
 
-        public DataTable ReportesClientesMostrar()
+        public DataTable ReportesClientesFiltro(int idCliente)
         {
             try
             {
-                const string query = @"Sp_ClientesMostrarCbox";
+                const string query = @"Sp_ReportesEnlacesFiltrar";
                 comando.Connection = conexion.AbrirConexion();
                 comando.CommandText = query;
                 comando.Parameters.Clear();
+                comando.Parameters.AddWithValue("@IdCliente", idCliente);
                 comando.CommandType = CommandType.StoredProcedure;
                 leer = comando.ExecuteReader();
                 tabla.Load(leer);
@@ -40,29 +41,6 @@ namespace Sistema.Datos
             {
                 conexion.CerrarConexion();
 
-            }
-        }
-
-        public DataTable ReportesEnlacesMostrar()
-        {
-            try
-            {
-                const string query = @"Sp_ReportesEnlacesMostrar";
-                comando.Connection = conexion.AbrirConexion();
-                comando.CommandText = query;
-                comando.Parameters.Clear();
-                comando.CommandType = CommandType.StoredProcedure;
-                leer = comando.ExecuteReader();
-                tabla.Load(leer);
-                return tabla;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-            finally
-            {
-                conexion.CerrarConexion();
             }
         }
     }
